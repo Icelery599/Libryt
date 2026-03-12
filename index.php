@@ -9,24 +9,6 @@ if (!$result) {
 } else {
     $books = mysqli_fetch_all($result, MYSQLI_ASSOC);
 }
-
-$heroSlides = [
-    [
-        "title" => "Welcome to Lekiri Library",
-        "description" => "Discover stories, research resources, and peaceful reading corners for every visitor.",
-        "image" => "Gemini_Generated_Image_2ks0y02ks0y02ks0.png",
-    ],
-    [
-        "title" => "Explore Our Museum Corner",
-        "description" => "Step through local history exhibits and curated cultural artifacts.",
-        "image" => "Gemini_Generated_Image_2ks0y02ks0y02ks0.png",
-    ],
-    [
-        "title" => "Books, Heritage & Community",
-        "description" => "From timeless classics to modern discoveries, there is something for everyone.",
-        "image" => "Gemini_Generated_Image_2ks0y02ks0y02ks0.png",
-    ],
-];
 ?>
 
 <!DOCTYPE html>
@@ -36,223 +18,215 @@ $heroSlides = [
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Lekiri Library</title>
     <style type="text/css">
-        * {
-            padding: 0;
-            margin: 0;
-            box-sizing: border-box;
+        * { padding: 0; margin: 0; box-sizing: border-box; }
+
+        :root {
+            --bg-dark: rgba(0, 0, 24, 0.967);
+            --panel: rgba(120, 120, 248, 0.9);
+            --highlight: #fff312;
+            --text: #ffffff;
         }
 
         body {
-            background: rgba(0, 0, 24, 0.967);
-            color: #fff;
+            background: var(--bg-dark);
+            color: var(--text);
             font-family: Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
         header {
             width: 100%;
-            padding: 24px;
-            background-color: rgba(120, 120, 248, 0.9);
-            text-align: center;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+            padding: 20px;
+            background-color: var(--panel);
+        }
+
+        .header-wrap {
+            width: min(1100px, 92%);
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: bold;
+            padding: 8px 12px;
+            border-radius: 7px;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        nav a:hover {
+            background: var(--highlight);
+            color: var(--bg-dark);
         }
 
         .page-wrap {
             width: min(1100px, 92%);
-            margin: 35px auto 40px;
+            margin: 30px auto;
+            flex: 1;
         }
 
-        .slideshow {
-            background-color: rgba(120, 120, 248, 0.9);
+        .hero, .books-section, .museums-section {
+            background-color: var(--panel);
             border-radius: 14px;
-            overflow: hidden;
-            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
-            margin-bottom: 35px;
+            padding: 18px;
+            margin-bottom: 20px;
         }
 
-        .slide {
-            display: none;
-            grid-template-columns: 1.2fr 1fr;
+        .hero p { line-height: 1.5; }
+
+        .split-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 16px;
             align-items: center;
-            padding: 18px;
+            margin-top: 12px;
         }
 
-        .slide.active {
-            display: grid;
-        }
-
-        .slide img {
+        .split-grid img {
             width: 100%;
-            height: 320px;
-            object-fit: cover;
-            border-radius: 12px;
+            border-radius: 10px;
             border: 2px solid rgba(255, 255, 255, 0.35);
-        }
-
-        .slide-content h2 {
-            margin-bottom: 10px;
-            font-size: 1.8rem;
-        }
-
-        .slide-content p {
-            line-height: 1.5;
-            margin-bottom: 14px;
-        }
-
-        .slide-content a {
-            display: inline-block;
-            padding: 10px 18px;
-            border-radius: 8px;
-            text-decoration: none;
-            color: rgba(0, 0, 24, 0.967);
-            background: #fff312;
-            font-weight: bold;
-        }
-
-        .dots {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            padding: 0 0 18px;
-        }
-
-        .dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.4);
-            border: none;
-            cursor: pointer;
-        }
-
-        .dot.active {
-            background: #fff312;
+            max-height: 260px;
+            object-fit: cover;
         }
 
         .books-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 16px;
+            gap: 14px;
+            margin-top: 14px;
         }
 
         .book-details {
-            background-color: rgba(120, 120, 248, 0.9);
-            border-radius: 12px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
             padding: 12px;
         }
 
         .book-details img {
             width: 100%;
-            height: 170px;
+            height: 160px;
             object-fit: cover;
             border-radius: 8px;
             margin-bottom: 8px;
         }
 
-        .book-details p {
-            margin: 4px 0;
-        }
+        .book-details p { margin: 4px 0; }
 
         .book-details a {
             display: inline-block;
             margin-top: 8px;
-            color: #fff;
             text-decoration: none;
             font-weight: bold;
+            color: var(--bg-dark);
+            background: var(--highlight);
+            padding: 8px 10px;
+            border-radius: 6px;
         }
 
         footer {
-            width: 100%;
-            background-color: rgba(120, 120, 248, 0.9);
-            padding: 10px;
-            text-align: center;
-            margin-top: 20px;
+            background-color: var(--panel);
+            padding: 16px;
         }
 
-        @media (max-width: 760px) {
-            .slide {
-                grid-template-columns: 1fr;
-            }
-
-            .slide img {
-                height: 220px;
-            }
+        .footer-wrap {
+            width: min(1100px, 92%);
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 20px;
+            justify-content: space-between;
+            font-size: 0.95rem;
         }
     </style>
 </head>
 <body>
 <header>
-    <h1>Library & Museum Home Page</h1>
+    <div class="header-wrap">
+        <h1>Libryt Landing Page</h1>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#books">Books</a></li>
+                <li><a href="#museums">Museums</a></li>
+            </ul>
+        </nav>
+    </div>
 </header>
 
 <div class="page-wrap">
-    <section class="slideshow" aria-label="Library and museum highlights">
-        <?php foreach ($heroSlides as $index => $slide): ?>
-            <article class="slide <?php echo $index === 0 ? 'active' : ''; ?>">
-                <img src="image/<?php echo $slide['image']; ?>" alt="<?php echo htmlspecialchars($slide['title']); ?>">
-                <div class="slide-content">
-                    <h2><?php echo htmlspecialchars($slide['title']); ?></h2>
-                    <p><?php echo htmlspecialchars($slide['description']); ?></p>
-                    <a href="register.php">Join the Community</a>
-                </div>
-            </article>
-        <?php endforeach; ?>
+    <section id="home" class="hero">
+        <h2>Welcome to Libryt</h2>
+        <p>A home for readers and history lovers. Find books, explore museums, and learn every day.</p>
+    </section>
 
-        <div class="dots" aria-label="Slideshow navigation">
-            <?php foreach ($heroSlides as $index => $_): ?>
-                <button class="dot <?php echo $index === 0 ? 'active' : ''; ?>" data-slide="<?php echo $index; ?>" aria-label="Go to slide <?php echo $index + 1; ?>"></button>
-            <?php endforeach; ?>
+    <section id="about" class="hero">
+        <h2>About Us</h2>
+        <p>Libryt connects free reading resources with museum learning so everyone can discover knowledge.</p>
+    </section>
+
+    <section id="books" class="books-section">
+        <h2>Get our books for free</h2>
+        <div class="split-grid">
+            <div>
+                <p>Borrow from our collection at no cost and keep your reading journey active.</p>
+            </div>
+            <img src="image/Gemini_Generated_Image_2ks0y02ks0y02ks0.png" alt="Books and reading area">
+        </div>
+
+        <div class="books-grid">
+            <?php if (empty($books)): ?>
+                <div class="book-details">
+                    <p>Book listings are currently unavailable. Please check back soon.</p>
+                </div>
+            <?php else: ?>
+                <?php foreach ($books as $row): ?>
+                    <div class="book-details">
+                        <img src="image/<?php echo htmlspecialchars($row['image']); ?>" alt="book image">
+                        <p>Book Title: <?php echo htmlspecialchars($row['title']); ?></p>
+                        <p>Author: <?php echo htmlspecialchars($row['author']); ?></p>
+                        <p>ISBN: <?php echo htmlspecialchars($row['isbn']); ?></p>
+                        <p>Quantity: <?php echo htmlspecialchars($row['quantity']); ?></p>
+                        <a href="borrow.php?book_id=<?php echo urlencode($row['id']); ?>">Borrow Book</a>
+                    </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
         </div>
     </section>
 
-    <section class="books-grid">
-        <?php if (empty($books)): ?>
-            <div class="book-details">
-                <p>Book listings are currently unavailable. Please check back soon.</p>
+    <section id="museums" class="museums-section">
+        <h2>Dive into our museums for history</h2>
+        <div class="split-grid">
+            <div>
+                <p>Explore exhibits that tell the stories of culture, people, and moments that shaped our world.</p>
             </div>
-        <?php else: ?>
-            <?php foreach ($books as $row): ?>
-                <div class="book-details">
-                    <img src="image/<?php echo htmlspecialchars($row['image']); ?>" alt="book image">
-                    <p>Book Title: <?php echo htmlspecialchars($row['title']); ?></p>
-                    <p>Author: <?php echo htmlspecialchars($row['author']); ?></p>
-                    <p>ISBN: <?php echo htmlspecialchars($row['isbn']); ?></p>
-                    <p>Quantity: <?php echo htmlspecialchars($row['quantity']); ?></p>
-                    <a href="borrow.php?book_id=<?php echo urlencode($row['id']); ?>">Borrow Book</a>
-                </div>
-            <?php endforeach; ?>
-        <?php endif; ?>
+            <img src="image/Gemini_Generated_Image_2ks0y02ks0y02ks0.png" alt="Museum exhibit">
+        </div>
     </section>
 </div>
 
 <footer>
-    <p>&copy; Lekiri Books 2026</p>
+    <div class="footer-wrap">
+        <span>Contact Us</span>
+        <span>FAQ</span>
+        <span>Follow us on social media</span>
+        <span>Copyright © 2026. All rights reserved.</span>
+    </div>
 </footer>
-
-<script>
-    const slides = document.querySelectorAll('.slide');
-    const dots = document.querySelectorAll('.dot');
-    let index = 0;
-
-    function showSlide(nextIndex) {
-        slides[index].classList.remove('active');
-        dots[index].classList.remove('active');
-
-        index = (nextIndex + slides.length) % slides.length;
-
-        slides[index].classList.add('active');
-        dots[index].classList.add('active');
-    }
-
-    dots.forEach((dot) => {
-        dot.addEventListener('click', () => {
-            showSlide(Number(dot.dataset.slide));
-        });
-    });
-
-    setInterval(() => {
-        showSlide(index + 1);
-    }, 4500);
-</script>
 </body>
 </html>

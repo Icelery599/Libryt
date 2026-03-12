@@ -18,34 +18,42 @@ if($_SESSION['role'] !== "user"){
 <title>User Dashboard</title>
 <style>
     *{margin:0;padding:0;box-sizing:border-box}
-    body{font-family:Arial, sans-serif;background:rgba(0,0,24,.967);color:#fff;min-height:100vh}
+    :root{--bg:rgba(0,0,24,.967);--panel:rgba(120,120,248,.9);--txt:#fff;--accent:#fff312}
+    body{font-family:Arial,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh}
     .layout{display:flex;min-height:100vh}
-    .sidebar{width:260px;background:rgba(120,120,248,.9);padding:24px 16px;display:flex;flex-direction:column}
+    .sidebar{width:280px;background:var(--panel);padding:24px 16px;display:flex;flex-direction:column}
     .sidebar h2{margin-bottom:16px}
-    .sidebar a{display:block;color:#fff;text-decoration:none;background:rgba(0,0,0,.2);padding:12px;border-radius:8px;margin-bottom:10px}
-    .sidebar a.logout{margin-top:auto;background:#c0392b}
-    .content{flex:1;padding:28px}
-    .adverts{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
-    .advert{background:rgba(120,120,248,.9);padding:16px;border-radius:10px}
+    .sidebar a{display:block;color:var(--txt);text-decoration:none;background:rgba(0,0,0,.2);padding:12px;border-radius:8px;margin-bottom:10px}
+    .sidebar a:hover{background:var(--accent);color:var(--bg)}
+    .sidebar-footer{margin-top:auto;padding-top:16px;font-size:.9rem}
+    .content{flex:1;padding:28px;background:rgba(120,120,248,.15)}
+    .survey-box{max-width:700px;background:var(--panel);padding:20px;border-radius:10px}
+    .survey-box h1{margin-bottom:12px}
+    .survey-box p{line-height:1.6;margin-bottom:14px}
+    .survey-box ul{padding-left:18px;line-height:1.7}
 </style>
 </head>
 <body>
 <div class="layout">
     <aside class="sidebar">
         <h2>User Dashboard</h2>
-        <a href="profile.php">Profile (Update)</a>
-        <a href="index.php">Borrow Books</a>
-        <a href="view_museum.php">View Museum</a>
-        <a class="logout" href="logout.php">Logout</a>
+        <a href="index.php">Your Books</a>
+        <a href="view_museum.php">See Museum</a>
+        <a href="return.php">Pay for Overdue Books</a>
+        <a href="logout.php">Logout</a>
+        <div class="sidebar-footer">Copyright © 2026</div>
     </aside>
 
     <main class="content">
-        <h1>Adverts</h1>
-        <br>
-        <section class="adverts">
-            <article class="advert"><h3>New Arrival</h3><p>Explore newly added books and borrow today.</p></article>
-            <article class="advert"><h3>Museum Week</h3><p>Visit the museum collection and discover local history.</p></article>
-            <article class="advert"><h3>Reading Challenge</h3><p>Borrow 3 books this month and earn a recognition badge.</p></article>
+        <section class="survey-box">
+            <h1>Book Recommendation Survey</h1>
+            <p>Answer this survey to help us know the books we can recommend for you.</p>
+            <ul>
+                <li>What genres do you enjoy most?</li>
+                <li>Do you prefer short reads or long novels?</li>
+                <li>Are you interested in history, science, fiction, or biographies?</li>
+                <li>How many books do you plan to read each month?</li>
+            </ul>
         </section>
     </main>
 </div>
