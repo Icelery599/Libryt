@@ -1,0 +1,58 @@
+/*css for register.php, login.php, logout.php page*/
+*{
+   margin: 0;
+   padding: 0; 
+}
+body{
+     background: rgba(0, 0, 24, 0.967);
+     background-size: cover;
+     font-family:sans-serif;
+}
+.register{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 200px auto;
+
+}
+.register{
+    background-color: rgba(120, 120, 248, 0.9);
+    width: 100%;
+    max-width: 450px;
+    padding: 30px;
+}
+.register input{
+    padding: 20px;
+    margin: 5px;
+    border: none;
+    border-bottom: 2px solid  #A020F0;
+}
+.register button{
+    padding: 10px;
+    width: 100%;
+    margin: 5px;
+    border: none;
+    border-radius: 10px;
+    background-color: #fff312;
+}
+.register button:hover{
+    padding: 10px;
+    width: 100%;
+    margin: 5px;
+    border: none;
+    border-radius: 10px;
+    background-color: #fff538;
+    box-shadow: 50px #fff200;
+    transform: scale(1.1);
+}
+.register p{
+    color: white;
+    text-decoration: none;
+}
+.register p a{
+    color: white;
+    text-decoration: none;
+}
+
+/* admin add_book.php */
+
