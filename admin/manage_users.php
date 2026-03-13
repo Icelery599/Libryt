@@ -21,8 +21,8 @@ if(isset($_SESSION['user_id'])){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Library</title>
-        <link rel="stylesheet" href="/styles.css">
+    <title>Manage Users</title>
+    <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
     <table>
@@ -45,7 +45,7 @@ if(isset($result) && mysqli_num_rows($result) > 0){
     <td><?php echo $row['name']; ?></td>
     <td><?php echo $row['email']; ?></td>
     <td><?php echo $row['role']; ?></td>
-    <td><a class="link" href="delete_user.php?user_id=<?php echo $row['id']; ?>">Delete users</a></td>
+    <td><a class="link" href="delete.php?user_id=<?php echo $row['id']; ?>">Delete user</a></td>
 </tr>
 <?php
     }
@@ -53,5 +53,10 @@ if(isset($result) && mysqli_num_rows($result) > 0){
 ?>
         </tbody>
     </table>
+    <footer class="site-footer">
+        <div class="footer-wrap">
+            <span>Lekiri Books &copy; All rights reserved 2026</span>
+        </div>
+    </footer>
 </body>
 </html>

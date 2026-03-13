@@ -84,6 +84,20 @@ header, footer { background: var(--panel); }
 .header-wrap, .footer-wrap {
   width: min(1100px, 92%);
   margin: 0 auto;
+  padding: 18px 0;
+}
+
+.header-wrap {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.header-wrap nav { margin-left: auto; }
+
+.header-account-btn {
+  margin-left: 12px;
+  white-space: nowrap;
 }
 
 nav ul { list-style: none; display: flex; gap: 12px; flex-wrap: wrap; }
@@ -101,7 +115,7 @@ nav a:hover, .sidebar a:hover, .admin-navbar a:hover, .btn:hover {
   color: var(--accent-dark);
 }
 
-.page-wrap { width: min(1100px, 92%); margin: 28px auto; }
+.page-wrap { width: min(1100px, 92%); margin: 32px auto; padding: 8px 0 24px; }
 .hero, .books-section, .museums-section, .panel, .survey-box, .card, .wrap, .register, .admin,
 .table-shell, .form-shell {
   background: var(--panel);
@@ -230,4 +244,15 @@ p { line-height: 1.6; }
   .layout { flex-direction: column; }
   .sidebar, .admin-navbar { width: 100%; }
   .about-section { grid-template-columns: 1fr; }
+  .header-wrap { flex-wrap: wrap; }
+  .header-wrap nav { width: 100%; margin-left: 0; }
+  .header-account-btn { margin-left: 0; }
 }
+
+.site-footer { margin-top: 26px; }
+
+.survey-question { margin-top: 14px; }
+.survey-option { display: block; margin-top: 6px; }
+.survey-option input { width: auto; margin-right: 8px; }
+.admin-main-empty { display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.04); }
+.admin-welcome { font-size: clamp(2.2rem, 6vw, 4.4rem); text-align: center; }

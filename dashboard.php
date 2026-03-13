@@ -1,5 +1,7 @@
 <?php
 session_start();
+include "db.php";
+
 if(!isset($_SESSION['user_id'])){
     header("Location: login.php");
     exit();
@@ -9,6 +11,34 @@ if($_SESSION['role'] !== "user"){
     header("Location: admin/dashboard.php");
     exit();
 }
+
+$user_id = $_SESSION['user_id'];
+
+$allQuestions = [
+    "What genres do you enjoy most?" => ["Fiction", "Non-fiction", "Science", "Biography"],
+    "How often do you read books?" => ["Daily", "Weekly", "Monthly", "Occasionally"],
+    "What format do you prefer?" => ["Printed books", "E-books", "Audio books", "Any format"],
+    "What kind of stories keep you engaged?" => ["Adventure", "Mystery", "Romance", "History"],
+    "How many books do you plan to read each month?" => ["1-2", "3-4", "5-6", "7+"],
+    "Do you prefer short reads or long novels?" => ["Short reads", "Long novels", "Both", "No preference"]
+];
+
+$surveyQuestions = $_SESSION['survey_questions'] ?? array_slice($allQuestions, 0, 4, true);
+
+$sqlBooks = "SELECT b.id, b.title, b.author, b.isbn, b.quantity, b.image
+             FROM books b
+             ORDER BY b.id DESC
+             LIMIT 8";
+$resultBooks = mysqli_query($conn, $sqlBooks);
+$books = $resultBooks ? mysqli_fetch_all($resultBooks, MYSQLI_ASSOC) : [];
+
+$sqlBorrowed = "SELECT t.id, b.title, t.issue_date, t.return_date, t.status
+               FROM transactions t
+               INNER JOIN books b ON b.id = t.book_id
+               WHERE t.user_id = '$user_id'
+               ORDER BY t.id DESC";
+$resultBorrowed = mysqli_query($conn, $sqlBorrowed);
+$borrowedBooks = $resultBorrowed ? mysqli_fetch_all($resultBorrowed, MYSQLI_ASSOC) : [];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,31 +46,98 @@ if($_SESSION['role'] !== "user"){
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>User Dashboard</title>
-    <link rel="stylesheet" href="/styles.css">
+<link rel="stylesheet" href="/styles.css">
 </head>
 <body>
 <div class="layout">
     <aside class="sidebar">
         <h2>User Dashboard</h2>
-        <a href="index.php">Your Books</a>
+        <a href="dashboard.php">Dashboard Home</a>
         <a href="view_museum.php">See Museum</a>
-        <a href="return.php">Pay for Overdue Books</a>
+        <a href="requestcheck.php">Your Borrow Records</a>
         <a href="logout.php">Logout</a>
-        <div class="sidebar-footer">Copyright © 2026</div>
+        <div class="sidebar-footer">Lekiri Books &copy; All rights reserved 2026</div>
     </aside>
 
     <main class="content">
         <section class="survey-box">
             <h1>Book Recommendation Survey</h1>
             <p>Answer this survey to help us know the books we can recommend for you.</p>
-            <ul>
-                <li>What genres do you enjoy most?</li>
-                <li>Do you prefer short reads or long novels?</li>
-                <li>Are you interested in history, science, fiction, or biographies?</li>
-                <li>How many books do you plan to read each month?</li>
-            </ul>
+            <form>
+                <?php foreach($surveyQuestions as $question => $options): ?>
+                    <div class="survey-question">
+                        <p><strong><?php echo htmlspecialchars($question); ?></strong></p>
+                        <?php foreach($options as $idx => $option): ?>
+                            <label class="survey-option">
+                                <input type="radio" name="q_<?php echo md5($question); ?>" value="<?php echo htmlspecialchars($option); ?>">
+                                <?php echo htmlspecialchars($option); ?>
+                            </label>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endforeach; ?>
+            </form>
+        </section>
+
+        <section class="books-section">
+            <h2>Available Books</h2>
+            <div class="books-grid">
+                <?php if(empty($books)): ?>
+                    <div class="book-details"><p>Book listings are currently unavailable.</p></div>
+                <?php else: ?>
+                    <?php foreach($books as $book): ?>
+                        <article class="book-details">
+                            <img src="image/<?php echo htmlspecialchars($book['image']); ?>" alt="book image">
+                            <p>Book Title: <?php echo htmlspecialchars($book['title']); ?></p>
+                            <p>Author: <?php echo htmlspecialchars($book['author']); ?></p>
+                            <p>ISBN: <?php echo htmlspecialchars($book['isbn']); ?></p>
+                            <p>Quantity: <?php echo htmlspecialchars($book['quantity']); ?></p>
+                            <a href="borrow.php?book_id=<?php echo urlencode($book['id']); ?>">Borrow Book</a>
+                        </article>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </div>
+        </section>
+
+        <section class="panel">
+            <h2>Your Books (Borrowed)</h2>
+            <?php if(empty($borrowedBooks)): ?>
+                <p>You have not borrowed any books yet.</p>
+            <?php else: ?>
+                <div class="table-shell">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Book</th>
+                                <th>Issue Date</th>
+                                <th>Return Date</th>
+                                <th>Status</th>
+                                <th>Charges</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <?php foreach($borrowedBooks as $record): ?>
+                            <?php
+                                $isLate = $record['status'] !== 'returned' && strtotime($record['issue_date']) < strtotime('-5 days');
+                            ?>
+                            <tr>
+                                <td><?php echo htmlspecialchars($record['title']); ?></td>
+                                <td><?php echo htmlspecialchars($record['issue_date']); ?></td>
+                                <td><?php echo htmlspecialchars($record['return_date'] ?: '-'); ?></td>
+                                <td><?php echo htmlspecialchars($record['status']); ?></td>
+                                <td><?php echo $isLate ? 'pay late charges' : 'No charges'; ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            <?php endif; ?>
         </section>
     </main>
 </div>
+<footer class="site-footer">
+    <div class="footer-wrap">
+        <span>Lekiri Books &copy; All rights reserved 2026</span>
+    </div>
+</footer>
 </body>
 </html>
