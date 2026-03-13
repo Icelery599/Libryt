@@ -2,6 +2,7 @@
   --bg: #070b2a;
   --bg-soft: #11183f;
   --panel: rgba(90, 105, 230, 0.88);
+  --panel-light: rgba(255, 255, 255, 0.3);
   --panel-strong: rgba(62, 78, 207, 0.95);
   --surface: rgba(255, 255, 255, 0.08);
   --text: #f7f9ff;
@@ -30,6 +31,55 @@ header, footer, .sidebar, .admin-navbar, .survey-box, .hero, .books-section, .mu
 }
 
 header, footer { background: var(--panel); }
+
+#home {
+  background: linear-gradient(135deg, rgba(12, 24, 70, 0.35), rgba(240, 248, 255, 0.2));
+  border: 1px solid rgba(240, 248, 255, 0.35);
+}
+
+.welcome-title {
+  font-size: clamp(3.5rem, 11vw, 100px);
+  line-height: 0.95;
+  letter-spacing: 0.02em;
+  text-wrap: balance;
+}
+
+.welcome-copy {
+  max-width: 760px;
+  background: var(--panel-light);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin: 8px 0 14px;
+}
+
+.borrow-now {
+  width: auto;
+  min-width: 180px;
+  font-size: 1rem;
+  padding: 12px 20px;
+}
+
+.about-section {
+  display: grid;
+  grid-template-columns: minmax(300px, 1.2fr) minmax(260px, 1fr);
+  gap: 20px;
+  align-items: center;
+}
+
+.about-copy p + p {
+  margin-top: 10px;
+}
+
+.about-image-wrap img {
+  width: 100%;
+  max-height: 320px;
+  border-radius: 12px;
+  object-fit: cover;
+  border: 1px solid rgba(255,255,255,.35);
+  box-shadow: var(--shadow);
+}
+
 
 .header-wrap, .footer-wrap {
   width: min(1100px, 92%);
@@ -179,4 +229,5 @@ p { line-height: 1.6; }
 @media (max-width: 840px) {
   .layout { flex-direction: column; }
   .sidebar, .admin-navbar { width: 100%; }
+  .about-section { grid-template-columns: 1fr; }
 }
