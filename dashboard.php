@@ -101,21 +101,10 @@ $borrowedBooks = $resultBorrowed ? mysqli_fetch_all($resultBorrowed, MYSQLI_ASSO
         </section>
 
         <section class="panel" id="your-books">
-            <h2>Your Books (Borrowed)</h2>
+            <h2>Your Borrowed Books Record</h2>
             <?php if(empty($borrowedBooks)): ?>
                 <p>You have not borrowed any books yet.</p>
             <?php else: ?>
-                <div class="books-grid">
-                    <?php foreach($borrowedBooks as $record): ?>
-                        <article class="book-details">
-                            <p><strong>Book:</strong> <?php echo htmlspecialchars($record['title']); ?></p>
-                            <p><strong>Author:</strong> <?php echo htmlspecialchars($record['author']); ?></p>
-                            <p><strong>ISBN:</strong> <?php echo htmlspecialchars($record['isbn']); ?></p>
-                            <p><strong>Issue Date:</strong> <?php echo htmlspecialchars($record['issue_date']); ?></p>
-                            <p><strong>Status:</strong> <?php echo htmlspecialchars($record['status']); ?></p>
-                        </article>
-                    <?php endforeach; ?>
-                </div>
                 <div class="table-shell">
                     <table>
                         <thead>
@@ -124,7 +113,7 @@ $borrowedBooks = $resultBorrowed ? mysqli_fetch_all($resultBorrowed, MYSQLI_ASSO
                                 <th>Issue Date</th>
                                 <th>Return Date</th>
                                 <th>Status</th>
-                                <th>Charges</th>
+                                <th>Write Up</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -138,7 +127,7 @@ $borrowedBooks = $resultBorrowed ? mysqli_fetch_all($resultBorrowed, MYSQLI_ASSO
                                 <td><?php echo htmlspecialchars($record['issue_date']); ?></td>
                                 <td><?php echo htmlspecialchars($record['return_date'] ?: '-'); ?></td>
                                 <td><?php echo htmlspecialchars($record['status']); ?></td>
-                                <td><?php echo $isLate ? 'pay late charges' : 'No charges'; ?></td>
+                                <td><?php echo $isLate ? 'Write up: This book is overdue by more than 5 days. Please return it immediately.' : 'No write up'; ?></td>
                                 <td>
                                     <?php if($record['status'] !== 'returned'): ?>
                                         <a class="update return-book-btn" href="return.php?transaction_id=<?php echo urlencode($record['id']); ?>">Return Book</a>
@@ -164,8 +153,9 @@ $borrowedBooks = $resultBorrowed ? mysqli_fetch_all($resultBorrowed, MYSQLI_ASSO
     document.querySelectorAll('.return-book-btn').forEach(function(button){
         button.addEventListener('click', function(event){
             event.preventDefault();
-            alert('pay for returning the book late');
-            window.location.href = button.getAttribute('href');
+            if (confirm('Confirm book return?')) {
+                window.location.href = button.getAttribute('href');
+            }
         });
     });
 </script>
