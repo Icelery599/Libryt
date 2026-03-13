@@ -112,6 +112,7 @@ $borrowedBooks = $resultBorrowed ? mysqli_fetch_all($resultBorrowed, MYSQLI_ASSO
                                 <th>Return Date</th>
                                 <th>Status</th>
                                 <th>Charges</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -125,6 +126,13 @@ $borrowedBooks = $resultBorrowed ? mysqli_fetch_all($resultBorrowed, MYSQLI_ASSO
                                 <td><?php echo htmlspecialchars($record['return_date'] ?: '-'); ?></td>
                                 <td><?php echo htmlspecialchars($record['status']); ?></td>
                                 <td><?php echo $isLate ? 'pay late charges' : 'No charges'; ?></td>
+                                <td>
+                                    <?php if($record['status'] !== 'returned'): ?>
+                                        <a class="update return-book-btn" href="return.php?transaction_id=<?php echo urlencode($record['id']); ?>">Return Book</a>
+                                    <?php else: ?>
+                                        Returned
+                                    <?php endif; ?>
+                                </td>
                             </tr>
                         <?php endforeach; ?>
                         </tbody>
@@ -139,5 +147,14 @@ $borrowedBooks = $resultBorrowed ? mysqli_fetch_all($resultBorrowed, MYSQLI_ASSO
         <span>Lekiri Books &copy; All rights reserved 2026</span>
     </div>
 </footer>
+<script>
+    document.querySelectorAll('.return-book-btn').forEach(function(button){
+        button.addEventListener('click', function(event){
+            event.preventDefault();
+            alert('pay for returning the book late');
+            window.location.href = button.getAttribute('href');
+        });
+    });
+</script>
 </body>
 </html>
