@@ -26,44 +26,7 @@ if(!$result){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Library</title>
-    <style>
-        *{
-            margin: 0;
-            padding: 0; 
-        }
-        body{
-            background: rgba(0, 0, 24, 0.967);
-            background-size: cover;
-        }
-        table{
-            border: none;
-            width: 100%;
-        }
-        tr, th{
-            border-bottom: 2px solid green;
-        }
-        td{
-            background-color: green;
-            border: none;
-            text-align: center;
-        }
-        td img{
-            width: 70px;
-            height: 70px;
-            border-radius: 2px;
-            margin: 10px 0;
-        }
-        .update{
-            text-decoration: none;
-            background-color: green;
-            color: white;
-        }
-        .delete{
-            text-decoration: none;
-            background-color: red;
-            color: white;
-        }
-    </style>
+        <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
     <table>

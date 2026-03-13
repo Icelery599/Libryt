@@ -41,14 +41,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Museum Item</title>
-    <style>
-        *{margin:0;padding:0;box-sizing:border-box}
-        body{font-family:Arial,sans-serif;background:rgba(0,0,24,.967);color:#fff}
-        .wrap{width:min(560px,92%);margin:70px auto;background:rgba(46,204,113,.85);padding:24px;border-radius:12px}
-        input,textarea,button{width:100%;padding:12px;margin-top:10px;border:none;border-radius:8px}
-        button{background:#fff312;cursor:pointer}
-        a{display:inline-block;margin-top:14px;color:#fff}
-    </style>
+        <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
     <div class="wrap">
