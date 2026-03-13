@@ -16,22 +16,7 @@ if($_SESSION['role'] !== "user"){
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>User Dashboard</title>
-<style>
-    *{margin:0;padding:0;box-sizing:border-box}
-    :root{--bg:rgba(0,0,24,.967);--panel:rgba(120,120,248,.9);--txt:#fff;--accent:#fff312}
-    body{font-family:Arial,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh}
-    .layout{display:flex;min-height:100vh}
-    .sidebar{width:280px;background:var(--panel);padding:24px 16px;display:flex;flex-direction:column}
-    .sidebar h2{margin-bottom:16px}
-    .sidebar a{display:block;color:var(--txt);text-decoration:none;background:rgba(0,0,0,.2);padding:12px;border-radius:8px;margin-bottom:10px}
-    .sidebar a:hover{background:var(--accent);color:var(--bg)}
-    .sidebar-footer{margin-top:auto;padding-top:16px;font-size:.9rem}
-    .content{flex:1;padding:28px;background:rgba(120,120,248,.15)}
-    .survey-box{max-width:700px;background:var(--panel);padding:20px;border-radius:10px}
-    .survey-box h1{margin-bottom:12px}
-    .survey-box p{line-height:1.6;margin-bottom:14px}
-    .survey-box ul{padding-left:18px;line-height:1.7}
-</style>
+    <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
 <div class="layout">

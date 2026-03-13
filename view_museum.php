@@ -21,13 +21,7 @@ if(file_exists($file_path)){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Museum</title>
-    <style>
-        *{margin:0;padding:0;box-sizing:border-box}
-        body{font-family:Arial,sans-serif;background:rgba(0,0,24,.967);color:#fff}
-        .wrap{width:min(900px,92%);margin:40px auto}
-        .item{background:rgba(120,120,248,.9);padding:16px;border-radius:10px;margin-bottom:12px}
-        a{color:#fff}
-    </style>
+        <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
 <div class="wrap">

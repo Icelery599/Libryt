@@ -30,48 +30,6 @@ else{
 <!DOCTYPE html>
 <html lang="en">
 <?php include "../heading.php"; ?>
-<style>
-    *{
-        margin: 0;
-        padding: 0; 
-    }
-    body{
-        background: rgba(0, 0, 24, 0.967);
-        background-size: cover;
-    }
-    .admin{
-    display: flex;
-    justify-content: center;
-    margin-top: 150px;
-}
-.admin input{
-    padding: 20px;
-    margin: 5px;
-    border: none;
-    border-bottom: 2px solid  #A020F0;
-}
-.admin button{
-    padding: 10px;
-    width: 100%;
-    margin: 5px;
-    border: none;
-    border-radius: 2px;
-    background-color: #fffc0f;
-}
-.admin button:hover{
-    padding: 10px;
-    width: 100%;
-    margin: 5px;
-    border: none;
-    border-radius: 2px;
-    background-color: #fffc5a;
-    transform:  
-}
-.file{
-    border: none !important;
-    width: 100%;
-}
-</style>
 <body>
     <div class="admin">
         <form action="add_book.php" method="POST" enctype="multipart/form-data">

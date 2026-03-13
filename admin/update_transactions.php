@@ -38,6 +38,7 @@ if(isset($_POST['submit'])){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
     <form action="update_transactions.php?transaction_id=<?php echo $transaction_id = isset($_GET['transaction_id']) ? $_GET['transaction_id'] : 0; ?>" method="post">

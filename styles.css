@@ -1,58 +1,182 @@
-/*css for register.php, login.php, logout.php page*/
-*{
-   margin: 0;
-   padding: 0; 
-}
-body{
-     background: rgba(0, 0, 24, 0.967);
-     background-size: cover;
-     font-family:sans-serif;
-}
-.register{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 200px auto;
-
-}
-.register{
-    background-color: rgba(120, 120, 248, 0.9);
-    width: 100%;
-    max-width: 450px;
-    padding: 30px;
-}
-.register input{
-    padding: 20px;
-    margin: 5px;
-    border: none;
-    border-bottom: 2px solid  #A020F0;
-}
-.register button{
-    padding: 10px;
-    width: 100%;
-    margin: 5px;
-    border: none;
-    border-radius: 10px;
-    background-color: #fff312;
-}
-.register button:hover{
-    padding: 10px;
-    width: 100%;
-    margin: 5px;
-    border: none;
-    border-radius: 10px;
-    background-color: #fff538;
-    box-shadow: 50px #fff200;
-    transform: scale(1.1);
-}
-.register p{
-    color: white;
-    text-decoration: none;
-}
-.register p a{
-    color: white;
-    text-decoration: none;
+:root {
+  --bg: #070b2a;
+  --bg-soft: #11183f;
+  --panel: rgba(90, 105, 230, 0.88);
+  --panel-strong: rgba(62, 78, 207, 0.95);
+  --surface: rgba(255, 255, 255, 0.08);
+  --text: #f7f9ff;
+  --muted: #d5dbff;
+  --accent: #ffe95c;
+  --accent-dark: #1a1f4f;
+  --danger: #df4a4a;
+  --ok: #2fa76f;
+  --radius: 12px;
+  --shadow: 0 16px 35px rgba(0, 0, 0, 0.35);
 }
 
-/* admin add_book.php */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: "Inter", Arial, sans-serif;
+  background: radial-gradient(circle at top, #192360, var(--bg) 42%, #040618 100%);
+  color: var(--text);
+  min-height: 100vh;
+}
 
+a { color: var(--text); }
+
+header, footer, .sidebar, .admin-navbar, .survey-box, .hero, .books-section, .museums-section,
+.card, .wrap, .item, .panel, .register, .admin, .table-shell, .form-shell {
+  backdrop-filter: blur(3px);
+}
+
+header, footer { background: var(--panel); }
+
+.header-wrap, .footer-wrap {
+  width: min(1100px, 92%);
+  margin: 0 auto;
+}
+
+nav ul { list-style: none; display: flex; gap: 12px; flex-wrap: wrap; }
+nav a {
+  text-decoration: none;
+  display: inline-block;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.2);
+  font-weight: 600;
+}
+
+nav a:hover, .sidebar a:hover, .admin-navbar a:hover, .btn:hover {
+  background: var(--accent);
+  color: var(--accent-dark);
+}
+
+.page-wrap { width: min(1100px, 92%); margin: 28px auto; }
+.hero, .books-section, .museums-section, .panel, .survey-box, .card, .wrap, .register, .admin,
+.table-shell, .form-shell {
+  background: var(--panel);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.hero, .books-section, .museums-section, .panel, .survey-box, .card, .wrap, .form-shell { padding: 20px; }
+
+.split-grid, .books-grid, .workspace {
+  display: grid;
+  gap: 16px;
+}
+.split-grid { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); align-items: center; margin-top: 12px; }
+.books-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin-top: 14px; }
+
+.book-details, .item {
+  background: var(--surface);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 10px;
+  padding: 12px;
+}
+
+.book-details img, .split-grid img, td img {
+  width: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+}
+.book-details img { height: 160px; margin-bottom: 8px; }
+.split-grid img { max-height: 260px; border: 1px solid rgba(255,255,255,.3); }
+
+.layout { display: flex; min-height: 100vh; }
+.sidebar, .admin-navbar {
+  width: 290px;
+  background: var(--panel-strong);
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.sidebar a, .admin-navbar a {
+  text-decoration: none;
+  display: block;
+  padding: 11px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.2);
+}
+.sidebar-footer, .copyright { margin-top: auto; padding-top: 12px; color: var(--muted); }
+.content { flex: 1; padding: 28px; background: rgba(131, 144, 255, 0.12); }
+.workspace { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); margin-top: 16px; }
+.placeholder {
+  border: 2px dashed rgba(255,255,255,.5);
+  border-radius: 8px;
+  padding: 18px;
+  text-align: center;
+}
+
+.register, .admin, .form-shell {
+  width: min(520px, 92%);
+  margin: 72px auto;
+  padding: 28px;
+}
+
+input, select, textarea, button {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,.2);
+  margin-top: 10px;
+  font: inherit;
+}
+input, select, textarea { background: rgba(5, 10, 35, 0.35); color: var(--text); }
+button, .btn {
+  cursor: pointer;
+  border: none;
+  background: var(--accent);
+  color: var(--accent-dark);
+  font-weight: 700;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+}
+
+
+
+table {
+  width: min(1100px, 96%);
+  margin: 30px auto;
+  border-collapse: collapse;
+  background: var(--panel);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.table-shell {
+  width: min(1100px, 96%);
+  margin: 30px auto;
+  padding: 14px;
+  overflow-x: auto;
+}
+
+.table-shell table { width: 100%; border-collapse: collapse; }
+th, td {
+  padding: 12px 10px;
+  border-bottom: 1px solid rgba(255,255,255,.25);
+  text-align: left;
+}
+th { color: var(--accent); }
+tr:hover td { background: rgba(255,255,255,.08); }
+
+.update, .delete, .link {
+  text-decoration: none;
+  color: #fff;
+  padding: 7px 10px;
+  border-radius: 6px;
+  font-size: .9rem;
+}
+.update, .link { background: var(--ok); }
+.delete { background: var(--danger); }
+
+h1, h2, h3 { margin-bottom: 10px; }
+p { line-height: 1.6; }
+
+@media (max-width: 840px) {
+  .layout { flex-direction: column; }
+  .sidebar, .admin-navbar { width: 100%; }
+}

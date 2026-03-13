@@ -16,22 +16,7 @@ if($_SESSION['role'] !== "admin"){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
-    <style>
-        *{margin:0;padding:0;box-sizing:border-box}
-        :root{--bg:rgba(0,0,24,.967);--panel:rgba(120,120,248,.9);--txt:#fff;--accent:#fff312}
-        body{font-family:Arial,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh}
-        .layout{display:flex;min-height:100vh}
-        .admin-navbar{width:290px;background:var(--panel);padding:24px 16px;display:flex;flex-direction:column}
-        .admin-navbar h2{margin-bottom:18px}
-        .admin-navbar a{display:block;color:var(--txt);text-decoration:none;background:rgba(0,0,0,.2);padding:12px;border-radius:8px;margin-bottom:10px}
-        .admin-navbar a:hover{background:var(--accent);color:var(--bg)}
-        .admin-navbar .copyright{margin-top:auto;font-size:.9rem;padding-top:10px}
-        .content{flex:1;padding:28px;background:rgba(120,120,248,.15)}
-        .workspace{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:14px}
-        .panel{background:var(--panel);padding:18px;border-radius:10px;min-height:200px}
-        .panel h3{margin-bottom:10px}
-        .placeholder{border:2px dashed rgba(255,255,255,.55);padding:22px;border-radius:8px;text-align:center;line-height:1.5}
-    </style>
+        <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
     <div class="layout">
