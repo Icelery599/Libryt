@@ -33,6 +33,7 @@ $resultBooks = mysqli_query($conn, $sqlBooks);
 $books = $resultBooks ? mysqli_fetch_all($resultBooks, MYSQLI_ASSOC) : [];
 
 $sqlBorrowed = "SELECT t.id, b.title, t.issue_date, t.return_date, t.status
+               , b.author, b.isbn
                FROM transactions t
                INNER JOIN books b ON b.id = t.book_id
                WHERE t.user_id = '$user_id'
@@ -52,15 +53,16 @@ $borrowedBooks = $resultBorrowed ? mysqli_fetch_all($resultBorrowed, MYSQLI_ASSO
 <div class="layout">
     <aside class="sidebar">
         <h2>User Dashboard</h2>
-        <a href="dashboard.php">Dashboard Home</a>
+        <a href="#dashboard-home">Dashboard Home</a>
         <a href="view_museum.php">See Museum</a>
-        <a href="requestcheck.php">Your Borrow Records</a>
+        <a href="#your-books">Your Books</a>
+        <a href="requestcheck.php">Borrow Records</a>
         <a href="logout.php">Logout</a>
         <div class="sidebar-footer">Lekiri Books &copy; All rights reserved 2026</div>
     </aside>
 
-    <main class="content">
-        <section class="survey-box">
+    <main class="content" id="dashboard-home">
+        <section class="survey-box" id="survey-section">
             <h1>Book Recommendation Survey</h1>
             <p>Answer this survey to help us know the books we can recommend for you.</p>
             <form>
@@ -78,7 +80,7 @@ $borrowedBooks = $resultBorrowed ? mysqli_fetch_all($resultBorrowed, MYSQLI_ASSO
             </form>
         </section>
 
-        <section class="books-section">
+        <section class="books-section" id="available-books">
             <h2>Available Books</h2>
             <div class="books-grid">
                 <?php if(empty($books)): ?>
@@ -98,11 +100,22 @@ $borrowedBooks = $resultBorrowed ? mysqli_fetch_all($resultBorrowed, MYSQLI_ASSO
             </div>
         </section>
 
-        <section class="panel">
+        <section class="panel" id="your-books">
             <h2>Your Books (Borrowed)</h2>
             <?php if(empty($borrowedBooks)): ?>
                 <p>You have not borrowed any books yet.</p>
             <?php else: ?>
+                <div class="books-grid">
+                    <?php foreach($borrowedBooks as $record): ?>
+                        <article class="book-details">
+                            <p><strong>Book:</strong> <?php echo htmlspecialchars($record['title']); ?></p>
+                            <p><strong>Author:</strong> <?php echo htmlspecialchars($record['author']); ?></p>
+                            <p><strong>ISBN:</strong> <?php echo htmlspecialchars($record['isbn']); ?></p>
+                            <p><strong>Issue Date:</strong> <?php echo htmlspecialchars($record['issue_date']); ?></p>
+                            <p><strong>Status:</strong> <?php echo htmlspecialchars($record['status']); ?></p>
+                        </article>
+                    <?php endforeach; ?>
+                </div>
                 <div class="table-shell">
                     <table>
                         <thead>
