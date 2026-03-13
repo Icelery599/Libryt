@@ -16,7 +16,7 @@ if($_SESSION['role'] !== "admin"){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
-        <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
     <div class="layout">
@@ -29,23 +29,17 @@ if($_SESSION['role'] !== "admin"){
             <a href="add_musuems.php">Add Things in Museum</a>
             <a href="view_museum.php">View Museum</a>
             <a href="../logout.php">Logout</a>
-            <div class="copyright">Copyright © 2026</div>
+            <div class="copyright">Lekiri Books &copy; All rights reserved 2026</div>
         </nav>
 
-        <main class="content">
-            <h1>Admin Dashboard Workspace</h1>
-            <p>Use this area for displaying update and delete actions.</p>
-            <section class="workspace">
-                <article class="panel">
-                    <h3>Update Space</h3>
-                    <div class="placeholder">This panel is reserved for update forms and edited records.</div>
-                </article>
-                <article class="panel">
-                    <h3>Delete Space</h3>
-                    <div class="placeholder">This panel is reserved for delete confirmations and removed items log.</div>
-                </article>
-            </section>
+        <main class="content admin-main-empty">
+            <h1 class="admin-welcome">Welcome to the admin dashboard</h1>
         </main>
     </div>
+    <footer class="site-footer">
+        <div class="footer-wrap">
+            <span>Lekiri Books &copy; All rights reserved 2026</span>
+        </div>
+    </footer>
 </body>
 </html>
