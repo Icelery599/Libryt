@@ -93,8 +93,9 @@ $borrowedBooks = $resultBorrowed ? mysqli_fetch_all($resultBorrowed, MYSQLI_ASSO
     document.querySelectorAll('.return-book-btn').forEach(function(button){
         button.addEventListener('click', function(event){
             event.preventDefault();
-            alert('pay for returning the book late');
-            window.location.href = button.getAttribute('href');
+            if (confirm('Confirm book return?')) {
+                window.location.href = button.getAttribute('href');
+            }
         });
     });
 </script>
