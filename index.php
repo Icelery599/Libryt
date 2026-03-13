@@ -1,5 +1,6 @@
 <?php
 include "db.php";
+session_start();
 
 $sql = "select * from books";
 $result = mysqli_query($conn, $sql);
@@ -9,6 +10,8 @@ if (!$result) {
 } else {
     $books = mysqli_fetch_all($result, MYSQLI_ASSOC);
 }
+
+$borrowLink = isset($_SESSION['user_id']) ? 'dashboard.php' : 'login.php';
 ?>
 
 <!DOCTYPE html>
@@ -36,13 +39,20 @@ if (!$result) {
 
 <div class="page-wrap">
     <section id="home" class="hero">
-        <h2>Welcome to Libryt</h2>
-        <p>A home for readers and history lovers. Find books, explore museums, and learn every day.</p>
+        <h2 class="welcome-title">Welcome to Libryt</h2>
+        <p class="welcome-copy">A modern e-library for curious minds. Discover timeless books, explore digital museum stories, and grow your knowledge from anywhere.</p>
+        <a class="btn borrow-now" href="<?php echo htmlspecialchars($borrowLink); ?>">Borrow Now</a>
     </section>
 
-    <section id="about" class="hero">
-        <h2>About Us</h2>
-        <p>Libryt connects free reading resources with museum learning so everyone can discover knowledge.</p>
+    <section id="about" class="hero about-section">
+        <div class="about-copy">
+            <h2>About Us</h2>
+            <p>Libryt connects free reading resources with cultural learning so everyone can discover, borrow, and enjoy meaningful content online.</p>
+            <p>From classics to modern discoveries, our platform is built to feel fast, beautiful, and easy to use for every reader.</p>
+        </div>
+        <div class="about-image-wrap">
+            <img src="image/Gemini_Generated_Image_2ks0y02ks0y02ks0.png" alt="Modern library interior">
+        </div>
     </section>
 
     <section id="books" class="books-section">
