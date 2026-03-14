@@ -66,7 +66,7 @@ if(isset($_SESSION['user_id'])){
         if($result){
             $sql2 = "UPDATE books SET quantity = quantity-1 WHERE id = '$book_id' AND quantity > 0";
             mysqli_query($conn, $sql2);
-            header("Location: dashboard.php#your-books");
+            header("Location: dashboard.php#available-books");
             exit();
         }else{
             echo "error!: {$conn->error}";
