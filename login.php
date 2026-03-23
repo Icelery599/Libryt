@@ -55,10 +55,5 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
             <p>No yet registered? <a href="register.php">Sign up</a></p>
         </form>
     </div>
-    <footer class="site-footer">
-        <div class="footer-wrap">
-            <span>Lekiri Books &copy; All rights reserved 2026</span>
-        </div>
-    </footer>
 </body>
 </html>

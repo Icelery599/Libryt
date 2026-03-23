@@ -36,7 +36,7 @@ $back_link = ($user['role'] === 'admin') ? 'admin/dashboard.php' : 'dashboard.ph
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile</title>
-        <link rel="stylesheet" href="/styles.css">
+        <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <div class="card">

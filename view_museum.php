@@ -23,7 +23,7 @@ if($query){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Museum</title>
-    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <div class="page-wrap">
@@ -49,10 +49,5 @@ if($query){
         </div>
     </section>
 </div>
-<footer class="site-footer">
-    <div class="footer-wrap">
-        <span>Lekiri Books &copy; All rights reserved 2026</span>
-    </div>
-</footer>
 </body>
 </html>

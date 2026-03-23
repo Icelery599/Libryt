@@ -21,7 +21,7 @@ if(isset($_SESSION['user_id'])){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Library</title>
-        <link rel="stylesheet" href="/styles.css">
+        <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <table>
@@ -32,7 +32,6 @@ if(isset($_SESSION['user_id'])){
                 <th>issue date</th>
                 <th>return date</th>
                 <th>status</th>
-                <th>Actions</th>
             </tr>
         </thead>
         <tbody>

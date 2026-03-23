@@ -14,7 +14,7 @@ $transaction_id = isset($_GET['transaction_id']) ? (int)$_GET['transaction_id'] 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Payment Gateway</title>
-    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <main class="page-wrap">
