@@ -18,23 +18,29 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $artist = trim($_POST['artist'] ?? '');
     $year_created = trim($_POST['year_created'] ?? '');
     $description = trim($_POST['description'] ?? '');
+    $image = $_FILES['image']['name'] ?? '';
 
-    if($title !== '' && $artist !== '' && $description !== ''){
-        $stmt = $conn->prepare("INSERT INTO artworks (title, artist, year_created, description) VALUES (?, ?, ?, ?)");
+    if($title !== '' && $artist !== '' && $description !== '' && $image !== ''){
+        $stmt = $conn->prepare("INSERT INTO artworks (title, artist, year_created, description, image) VALUES (?, ?, ?, ?, ?)");
         if($stmt){
-            $yearValue = $year_created !== '' ? $year_created : null;
-            $stmt->bind_param("ssis", $title, $artist, $yearValue, $description);
+            $yearValue = $year_created !== '' ? (int) $year_created : null;
+            $stmt->bind_param("ssiss", $title, $artist, $yearValue, $description, $image);
             if($stmt->execute()){
+                $imageLocation = $_FILES['image']['tmp_name'] ?? '';
+                $uploadLocation = "../image/";
+                if($imageLocation !== ''){
+                    move_uploaded_file($imageLocation, $uploadLocation . $image);
+                }
                 $message = 'Artwork added successfully.';
             }else{
                 $message = 'Unable to save artwork right now.';
             }
             $stmt->close();
         }else{
-            $message = 'Artworks table is missing. Please import the latest database SQL.';
+            $message = 'Artworks table is missing the latest fields. Please import the latest database SQL.';
         }
     }else{
-        $message = 'Please fill in the title, artist, and description fields.';
+        $message = 'Please fill in the title, artist, description, and image fields.';
     }
 }
 ?>
@@ -43,17 +49,17 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Museum Artwork</title>
+    <title>Add Artwork</title>
     <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
     <div class="wrap form-shell">
-        <h1>Add Artwork to Museum</h1>
-        <p class="muted-text">Create a museum artwork record that visitors can see and admins can manage.</p>
+        <h1>Add Artwork</h1>
+        <p class="muted-text">Upload artwork details so they appear in the museum collection like books do in the library.</p>
         <?php if($message !== ''): ?>
             <p class="status-message"><?php echo htmlspecialchars($message); ?></p>
         <?php endif; ?>
-        <form method="post" action="add_musuems.php">
+        <form method="post" action="add_musuems.php" enctype="multipart/form-data">
             <label for="title">Artwork title</label>
             <input id="title" type="text" name="title" placeholder="Artwork title" required>
 
@@ -62,6 +68,9 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
             <label for="year_created">Year created</label>
             <input id="year_created" type="number" name="year_created" placeholder="e.g. 1889">
+
+            <label for="image">Artwork image</label>
+            <input id="image" type="file" name="image" class="file" accept="image/*" required>
 
             <label for="description">Artwork description</label>
             <textarea id="description" name="description" placeholder="Describe the artwork" rows="5" required></textarea>

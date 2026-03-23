@@ -14,9 +14,9 @@ if($_SESSION['role'] !== 'admin'){
 $id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
 $message = '';
 
-$stmt = $conn->prepare("SELECT id, title, artist, year_created, description FROM artworks WHERE id = ?");
+$stmt = $conn->prepare("SELECT id, title, artist, year_created, description, image FROM artworks WHERE id = ?");
 if(!$stmt){
-    die('Artworks table is missing. Please import the latest database SQL.');
+    die('Artworks table is missing the latest fields. Please import the latest database SQL.');
 }
 $stmt->bind_param("i", $id);
 $stmt->execute();
@@ -34,19 +34,32 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $artist = trim($_POST['artist'] ?? '');
     $year_created = trim($_POST['year_created'] ?? '');
     $description = trim($_POST['description'] ?? '');
+    $newImage = $_FILES['image']['name'] ?? '';
+    $image = $newImage !== '' ? $newImage : ($artwork['image'] ?? '');
 
-    if($title !== '' && $artist !== '' && $description !== ''){
-        $update = $conn->prepare("UPDATE artworks SET title = ?, artist = ?, year_created = ?, description = ? WHERE id = ?");
-        $yearValue = $year_created !== '' ? $year_created : null;
-        $update->bind_param("ssisi", $title, $artist, $yearValue, $description, $id);
-        if($update->execute()){
-            header("Location: view_museum.php");
-            exit();
+    if($title !== '' && $artist !== '' && $description !== '' && $image !== ''){
+        $update = $conn->prepare("UPDATE artworks SET title = ?, artist = ?, year_created = ?, description = ?, image = ? WHERE id = ?");
+        if($update){
+            $yearValue = $year_created !== '' ? (int) $year_created : null;
+            $update->bind_param("ssissi", $title, $artist, $yearValue, $description, $image, $id);
+            if($update->execute()){
+                if($newImage !== ''){
+                    $imageLocation = $_FILES['image']['tmp_name'] ?? '';
+                    if($imageLocation !== ''){
+                        move_uploaded_file($imageLocation, "../image/" . $newImage);
+                    }
+                }
+                $update->close();
+                header("Location: view_museum.php");
+                exit();
+            }
+            $message = 'Unable to update artwork right now.';
+            $update->close();
+        }else{
+            $message = 'Artworks table is missing the latest fields. Please import the latest database SQL.';
         }
-        $message = 'Unable to update artwork right now.';
-        $update->close();
     }else{
-        $message = 'Please fill in the title, artist, and description fields.';
+        $message = 'Please fill in the title, artist, description, and image fields.';
     }
 
     $artwork = [
@@ -55,6 +68,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         'artist' => $artist,
         'year_created' => $year_created,
         'description' => $description,
+        'image' => $image,
     ];
 }
 ?>
@@ -63,7 +77,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Museum Artwork</title>
+    <title>Edit Artwork</title>
     <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
@@ -72,7 +86,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         <?php if($message !== ''): ?>
             <p class="status-message"><?php echo htmlspecialchars($message); ?></p>
         <?php endif; ?>
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
             <label for="title">Artwork title</label>
             <input id="title" type="text" name="title" value="<?php echo htmlspecialchars($artwork['title']); ?>" required>
 
@@ -81,6 +95,14 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
             <label for="year_created">Year created</label>
             <input id="year_created" type="number" name="year_created" value="<?php echo htmlspecialchars((string) ($artwork['year_created'] ?? '')); ?>">
+
+            <?php if(!empty($artwork['image'])): ?>
+                <label>Current artwork image</label>
+                <img class="artwork-preview" src="../image/<?php echo htmlspecialchars($artwork['image']); ?>" alt="Current artwork image">
+            <?php endif; ?>
+
+            <label for="image">Replace artwork image</label>
+            <input id="image" type="file" name="image" class="file" accept="image/*">
 
             <label for="description">Artwork description</label>
             <textarea id="description" name="description" rows="5" required><?php echo htmlspecialchars($artwork['description']); ?></textarea>
