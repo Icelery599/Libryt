@@ -26,10 +26,9 @@ if($_SESSION['role'] !== "admin"){
             <a href="manage_users.php">Manage Users</a>
             <a href="add_book.php">Add Books</a>
             <a href="view_books.php">View Books</a>
-            <a href="add_musuems.php">Add Things in Museum</a>
-            <a href="view_museum.php">View Museum</a>
+            <a href="add_musuems.php">Add Artwork</a>
+            <a href="view_museum.php">Manage Artworks</a>
             <a href="../logout.php">Logout</a>
-            <div class="copyright">Lekiri Books &copy; All rights reserved 2026</div>
         </nav>
 
         <main class="content admin-main-empty">
