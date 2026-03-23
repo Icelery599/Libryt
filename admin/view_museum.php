@@ -12,7 +12,7 @@ if($_SESSION['role'] !== 'admin'){
 }
 
 $artworks = [];
-$query = mysqli_query($conn, "SELECT id, title, artist, year_created, description, created_at FROM artworks ORDER BY id DESC");
+$query = mysqli_query($conn, "SELECT id, title, artist, year_created, description, image, created_at FROM artworks ORDER BY id DESC");
 if($query){
     $artworks = mysqli_fetch_all($query, MYSQLI_ASSOC);
 }
@@ -22,7 +22,7 @@ if($query){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage Museum Artworks</title>
+    <title>Manage Artworks</title>
     <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
@@ -31,7 +31,7 @@ if($query){
         <div class="page-title-row">
             <div>
                 <h1>Museum Artworks</h1>
-                <p class="muted-text">Add, edit, and delete artworks from the museum database.</p>
+                <p class="muted-text">Admins can add, update, and delete artworks from here.</p>
             </div>
             <a class="btn" href="add_musuems.php">Add New Artwork</a>
         </div>
@@ -42,6 +42,9 @@ if($query){
             <div class="museum-grid">
                 <?php foreach($artworks as $artwork): ?>
                     <article class="item museum-card">
+                        <?php if(!empty($artwork['image'])): ?>
+                            <img class="artwork-card-image" src="../image/<?php echo htmlspecialchars($artwork['image']); ?>" alt="<?php echo htmlspecialchars($artwork['title']); ?> artwork image">
+                        <?php endif; ?>
                         <span class="card-tag">Artwork #<?php echo (int)$artwork['id']; ?></span>
                         <h3><?php echo htmlspecialchars($artwork['title']); ?></h3>
                         <p><strong>Artist:</strong> <?php echo htmlspecialchars($artwork['artist']); ?></p>

@@ -12,7 +12,7 @@ if($_SESSION['role'] !== 'user'){
 }
 
 $artworks = [];
-$query = mysqli_query($conn, "SELECT title, artist, year_created, description FROM artworks ORDER BY id DESC");
+$query = mysqli_query($conn, "SELECT title, artist, year_created, description, image FROM artworks ORDER BY id DESC");
 if($query){
     $artworks = mysqli_fetch_all($query, MYSQLI_ASSOC);
 }
@@ -36,6 +36,9 @@ if($query){
             <div class="museum-grid">
                 <?php foreach($artworks as $artwork): ?>
                     <article class="item museum-card">
+                        <?php if(!empty($artwork['image'])): ?>
+                            <img class="artwork-card-image" src="image/<?php echo htmlspecialchars($artwork['image']); ?>" alt="<?php echo htmlspecialchars($artwork['title']); ?> artwork image">
+                        <?php endif; ?>
                         <h3><?php echo htmlspecialchars($artwork['title']); ?></h3>
                         <p><strong>Artist:</strong> <?php echo htmlspecialchars($artwork['artist']); ?></p>
                         <p><strong>Year:</strong> <?php echo htmlspecialchars($artwork['year_created'] ?: 'Unknown'); ?></p>
